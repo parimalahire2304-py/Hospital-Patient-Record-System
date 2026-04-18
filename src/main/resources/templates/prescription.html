@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Prescription</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+        }
+
+        .container {
+            width: 500px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: darkgreen;
+        }
+
+        .msg {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h2>Add Prescription</h2>
+
+    <!-- Success Message -->
+    <p th:if="${Success}" th:text="${Success}" class="msg success"></p>
+
+    <!-- Error Message -->
+    <p th:if="${errorMsg}" th:text="${errorMsg}" class="msg error"></p>
+
+    <form th:action="@{/PrescriptionForm}" th:object="${prescription}" method="post">
+
+        <!-- Patient ID -->
+        <label>Patient ID</label>
+        <input type="number" name="patientId" placeholder="Enter Patient ID" required>
+
+        <!-- Date -->
+        <label>Date</label>
+        <input type="date" th:field="*{date}" required>
+
+        <!-- Symptoms -->
+        <label>Symptoms</label>
+        <textarea th:field="*{symptoms}" required></textarea>
+
+        <!-- Diagnosis -->
+        <label>Diagnosis</label>
+        <textarea th:field="*{diagnosis}" required></textarea>
+
+        <!-- Medicine -->
+        <label>Medicine</label>
+        <textarea th:field="*{medicine}" required></textarea>
+
+        <!-- Notes -->
+        <label>Notes</label>
+        <textarea th:field="*{note}"></textarea>
+
+        <!-- Doctor Name -->
+        <label>Prescribed By</label>
+        <input type="text" th:field="*{prescribedBy}" required>
+
+        <button type="submit">Save Prescription</button>
+
+    </form>
+
+    <a href="/">⬅ Back to Home</a>
+
+</div>
+
+</body>
+</html>

@@ -13,7 +13,7 @@ public class Patient {
     private String name;
 
     @Column
-    private int age;
+    private Integer age;
 
     @Column
     private String gender;
@@ -39,11 +39,11 @@ public class Patient {
         this.name = name;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 

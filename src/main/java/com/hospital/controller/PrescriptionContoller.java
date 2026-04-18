@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hospital.entity.Patient;
 import com.hospital.entity.Prescription;
 import com.hospital.repository.PatientRepository;
 import com.hospital.service.PrescriptionService;
@@ -29,13 +30,19 @@ public class PrescriptionContoller {
 	@GetMapping("/prescription")
 	public String openPresciption(Model model) {
 		model.addAttribute("prescription", new Prescription());
-		return "Prescription";
+		return "prescription";
 	}
 	@PostMapping("/PrescriptionForm")
 	public String savePrescription(@RequestParam int patientId,@ModelAttribute("prescription") Prescription pres ,Model model ) {
-		Patient patient = patientRepo.findById(patientId).get();
+		Patient patient = patientRepo.findById(patientId).orElse(null);
 
-	    pres.setPatient(patient);
+        if (patient == null) {
+            model.addAttribute("errorMsg", "Patient not found!");
+            return "prescription";
+        }
+
+        pres.setPatient(patient);
+	
 
 		boolean status=pressave.savePrescription(pres);
 		if (status) {
@@ -44,7 +51,7 @@ public class PrescriptionContoller {
 		else {
 			model.addAttribute("errorMsg", "Failed To Save Prescription");
 		}
-		return "Save";
+		return "redirect:/prescription";
 	
 	
 		

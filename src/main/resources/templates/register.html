@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Add Patient</title>
+<link rel="stylesheet" th:href="@{/css/form.css}">
+</head>
+
+<body>
+
+<!-- BACK BUTTON -->
+<a href="/patients" class="back-link">← Back</a>
+
+<div class="form-container">
+
+    <!-- PAGE TITLE -->
+    <h2 class="form-title">Add Patient</h2>
+
+    <!-- SUCCESS MESSAGE -->
+    <div th:if="${Success}" class="success">
+        <p th:text="${Success}"></p>
+    </div>
+
+    <!-- ERROR MESSAGE -->
+    <div th:if="${errorMsg}" class="error">
+        <p th:text="${errorMsg}"></p>
+    </div>
+
+    <!-- FORM CARD -->
+    <div class="form-card">
+
+        <h3 class="form-subtitle">Patient Information</h3>
+
+        <form th:action="@{/regForm}" th:object="${patient}" method="post">
+
+            <!-- NAME -->
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" th:field="*{name}" placeholder="Full name" required>
+            </div>
+
+            <!-- AGE + GENDER -->
+            <div class="form-row">
+
+                <!-- AGE -->
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="number" th:field="*{age}" placeholder="Years" min="1" required>
+                </div>
+
+                <!-- GENDER -->
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select th:field="*{gender}" required>
+                        <option value="">Select gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <!-- PHONE -->
+            <div class="form-group">
+                <label>Phone</label>
+                <input type="text" th:field="*{phoneNo}" placeholder="+91 XXXXX XXXXX" required>
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="button-group">
+                <button type="submit" class="btn-primary">Submit</button>
+
+                <a href="/patients">
+                    <button type="button" class="btn-secondary">Cancel</button>
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

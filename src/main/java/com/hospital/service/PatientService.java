@@ -2,8 +2,10 @@ package com.hospital.service;
  
 import java.util.List;
 
-import com.hospital.entity.Patient;
+import org.springframework.stereotype.Service;
 
+import com.hospital.entity.Patient;
+@Service
 public interface PatientService {
     public boolean registerpatient(Patient patient);
 

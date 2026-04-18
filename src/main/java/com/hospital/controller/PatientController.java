@@ -1,6 +1,6 @@
 package com.hospital.controller;
 
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,49 +16,56 @@ public class PatientController {
     @Autowired
     private PatientService patientServ;
 
-    // 👉 Open Registration Page
     @GetMapping("/regPage")
     public String openRegPage(Model model) {
         model.addAttribute("patient", new Patient());
         return "register";
     }
 
-    // 👉 SAVE / UPDATE Patient (FIXED ✅)
     @PostMapping("/regForm")
-    public String submitRegform(@ModelAttribute("patient") Patient patient) {
+    public String submitRegform(@ModelAttribute("patient") Patient patient, Model model) {
 
-        patientServ.registerpatient(patient);
+        boolean status = patientServ.registerpatient(patient);
 
-        // ✅ Redirect to patients list page after save/update
-        return "redirect:/patients";
+        if (status) {
+            return "redirect:/patients";
+        } else {
+            model.addAttribute("errorMsg", "Failed to register patient");
+            return "register";
+        }
     }
 
-    // 👉 View All Patients
     @GetMapping("/patients")
     public String getAllPatients(Model model) {
-
-        List<Patient> list = patientServ.getAllPatients();
-        model.addAttribute("patients", list);
-
+        model.addAttribute("patients", patientServ.getAllPatients());
         return "patients";
     }
 
-    // 👉 Edit Patient (Open Update Form)
     @GetMapping("/edit/{id}")
     public String editPatient(@PathVariable Integer id, Model model) {
 
         Patient patient = patientServ.getPatientById(id);
-        model.addAttribute("patient", patient);
 
+        if (patient == null) {
+            return "redirect:/patients";
+        }
+
+        model.addAttribute("patient", patient);
         return "updatePatient";
     }
 
-    // 👉 Delete Patient (Already Correct ✅)
     @GetMapping("/delete/{id}")
     public String deletePatient(@PathVariable Integer id) {
-
-        patientServ.deletePatient(id);
-
+        try {
+            patientServ.deletePatient(id);
+        } catch (Exception e) {
+            System.out.println("Cannot delete patient (FK constraint)");
+        }
         return "redirect:/patients";
+    }
+    @GetMapping("/history/{id}")
+    public String patientHistory(@PathVariable Integer id, Model model) {
+        // later implement
+        return "history";
     }
 }
