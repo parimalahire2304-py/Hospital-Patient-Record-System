@@ -3,81 +3,197 @@
 <head>
 <meta charset="UTF-8">
 <title>Add Patient</title>
-<link rel="stylesheet" th:href="@{/css/form.css}">
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Arial;
+        height: 100vh;
+
+        /* 🌄 Same background */
+        background: url('https://images.unsplash.com/photo-1586773860418-d37222d8fce3') no-repeat center center/cover;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* 🌫 Overlay */
+    .overlay {
+        background: rgba(0, 0, 0, 0.6);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    /* 📦 Form container */
+    .form-container {
+        position: relative;
+        z-index: 1;
+        width: 400px;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 30px;
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        color: white;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Back button */
+    .back-link {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+
+    /* Form */
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: none;
+    }
+
+    /* Row layout */
+    .form-row {
+        display: flex;
+        gap: 10px;
+    }
+
+    .form-row .form-group {
+        flex: 1;
+    }
+
+    /* Buttons */
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .btn-primary {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background: linear-gradient(45deg, #28a745, #218838);
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+        width: 48%;
+    }
+
+    .btn-primary:hover {
+        transform: scale(1.05);
+    }
+
+    .btn-secondary {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background: gray;
+        color: white;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .btn-secondary:hover {
+        background: darkgray;
+    }
+
+    /* Messages */
+    .success {
+        color: lightgreen;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .error {
+        color: red;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+</style>
+
 </head>
 
 <body>
 
-<!-- BACK BUTTON -->
-<a href="/patients" class="back-link">← Back</a>
+<div class="overlay"></div>
+
+<a href="/patients" class="back-link">⬅ Back</a>
 
 <div class="form-container">
 
-    <!-- PAGE TITLE -->
-    <h2 class="form-title">Add Patient</h2>
+    <h2>➕ Add Patient</h2>
 
-    <!-- SUCCESS MESSAGE -->
+    <!-- Success Message -->
     <div th:if="${Success}" class="success">
         <p th:text="${Success}"></p>
     </div>
 
-    <!-- ERROR MESSAGE -->
+    <!-- Error Message -->
     <div th:if="${errorMsg}" class="error">
         <p th:text="${errorMsg}"></p>
     </div>
 
-    <!-- FORM CARD -->
-    <div class="form-card">
+    <form th:action="@{/regForm}" th:object="${patient}" method="post">
 
-        <h3 class="form-subtitle">Patient Information</h3>
+        <!-- Name -->
+        <label>Name</label>
+        <input type="text" th:field="*{name}" placeholder="Full name" required>
 
-        <form th:action="@{/regForm}" th:object="${patient}" method="post">
+        <!-- Age + Gender -->
+        <div class="form-row">
 
-            <!-- NAME -->
             <div class="form-group">
-                <label>Name</label>
-                <input type="text" th:field="*{name}" placeholder="Full name" required>
+                <label>Age</label>
+                <input type="number" th:field="*{age}" placeholder="Years" min="1" required>
             </div>
 
-            <!-- AGE + GENDER -->
-            <div class="form-row">
-
-                <!-- AGE -->
-                <div class="form-group">
-                    <label>Age</label>
-                    <input type="number" th:field="*{age}" placeholder="Years" min="1" required>
-                </div>
-
-                <!-- GENDER -->
-                <div class="form-group">
-                    <label>Gender</label>
-                    <select th:field="*{gender}" required>
-                        <option value="">Select gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select>
-                </div>
-
-            </div>
-
-            <!-- PHONE -->
             <div class="form-group">
-                <label>Phone</label>
-                <input type="text" th:field="*{phoneNo}" placeholder="+91 XXXXX XXXXX" required>
+                <label>Gender</label>
+                <select th:field="*{gender}" required>
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
             </div>
 
-            <!-- BUTTONS -->
-            <div class="button-group">
-                <button type="submit" class="btn-primary">Submit</button>
+        </div>
 
-                <a href="/patients">
-                    <button type="button" class="btn-secondary">Cancel</button>
-                </a>
-            </div>
+        <!-- Phone -->
+        <label>Phone</label>
+        <input type="text" th:field="*{phoneNo}" placeholder="+91 XXXXX XXXXX" required>
 
-        </form>
+        <!-- Buttons -->
+        <div class="button-group">
+            <button type="submit" class="btn-primary">Submit</button>
 
-    </div>
+            <a href="/patients" style="width:48%;">
+                <button type="button" class="btn-secondary">Cancel</button>
+            </a>
+        </div>
+
+    </form>
 
 </div>
 

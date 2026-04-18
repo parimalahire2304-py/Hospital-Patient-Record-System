@@ -1,5 +1,7 @@
 package com.hospital.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,9 @@ public class PrescriptionServiceImple implements PrescriptionService{
 			e.printStackTrace();
 		}
 		return false;
+	}
+	public List<Prescription> getPrescriptionByPatientId(Integer patientId) {
+	    return presRepo.findByPatientId(patientId);
 	}
 
 }

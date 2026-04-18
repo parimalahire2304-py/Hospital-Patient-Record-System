@@ -2,16 +2,22 @@ package com.hospital.controller;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.hospital.entity.Patient;
+import com.hospital.entity.Prescription;
 import com.hospital.service.PatientService;
+import com.hospital.service.PrescriptionService;
 
 @Controller
 public class PatientController {
+	@Autowired
+	private PrescriptionService prescriptionService;
 
     @Autowired
     private PatientService patientServ;
@@ -65,7 +71,46 @@ public class PatientController {
     }
     @GetMapping("/history/{id}")
     public String patientHistory(@PathVariable Integer id, Model model) {
-        // later implement
+
+        Patient patient = patientServ.getPatientById(id);
+
+        if (patient == null) {
+            return "redirect:/patients";
+        }
+
+        List<Prescription> prescriptions =
+        	    prescriptionService.getPrescriptionByPatientId(id);
+
+        model.addAttribute("patient", patient);
+        model.addAttribute("prescriptions", prescriptions);
+
+        return "history";
+    }
+    
+    @GetMapping("/history")
+    public String patientHistoryByParam(@RequestParam(required = false) Integer id, Model model) {
+
+        if (id == null) {
+            return "history";
+        }
+
+        Patient patient = patientServ.getPatientById(id);
+
+        if (patient == null) {
+            model.addAttribute("errorMsg", "Patient not found");
+            return "history";
+        }
+
+        List<Prescription> prescriptions =
+                prescriptionService.getPrescriptionByPatientId(id);
+
+        model.addAttribute("patient", patient);
+        model.addAttribute("prescriptions", prescriptions);
+
+        return "history";
+    }
+    @GetMapping("/historyPage")
+    public String openHistoryPage() {
         return "history";
     }
 }
