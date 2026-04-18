@@ -8,7 +8,7 @@ public class HospitalPatientRecordSystemApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(HospitalPatientRecordSystemApplication.class, args);
-		//main
+		
 	}
 
 }

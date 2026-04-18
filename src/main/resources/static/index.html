@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hospital System</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        a {
+            display: block;
+            margin: 15px;
+            padding: 12px;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+            background: green;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a:hover {
+            background: darkgreen;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Hospital Patient Record System</h1>
+
+    <a th:href="@{/prescription}">Add Prescription</a>
+
+    <!-- You can add more later -->
+    <!--
+    <a th:href="@{/patients}">View Patients</a>
+    <a th:href="@{/doctors}">View Doctors</a>
+    -->
+
+</div>
+
+</body>
+</html>
