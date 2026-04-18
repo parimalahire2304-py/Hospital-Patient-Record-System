@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Patients</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    Hospital Patient Record System
+</div>
+
+<!-- FULL WIDTH CONTENT -->
+<div class="content" style="margin: auto; max-width: 1000px;">
+
+    <div class="top-bar">
+        <div>
+            <h2>Patient Management</h2>
+            <p style="color:gray;">Manage all registered patients</p>
+        </div>
+
+        <a href="/regPage" class="add-btn">+ Add Patient</a>
+    </div>
+
+    <!-- CARD -->
+    <div class="card">
+
+        <h3>All Patients</h3>
+
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Phone</th>
+                <th>Actions</th>
+            </tr>
+
+            <tr th:each="p : ${patients}">
+                <td th:text="${p.name}"></td>
+                <td th:text="${p.age}"></td>
+                <td th:text="${p.gender}"></td>
+                <td th:text="${p.phoneNo}"></td>
+
+                <td class="actions">
+
+                    <a th:href="@{/history/{id}(id=${p.id})}">
+                        <button>⏱ History</button>
+                    </a>
+
+                    <a th:href="@{/edit/{id}(id=${p.id})}">
+                        <button>✏</button>
+                    </a>
+
+                    <a th:href="@{/delete/{id}(id=${p.id})}"
+                       onclick="return confirm('Delete this patient?')">
+                        <button class="delete">🗑</button>
+                    </a>
+
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>
