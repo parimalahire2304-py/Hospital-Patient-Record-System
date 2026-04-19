@@ -1,10 +1,10 @@
 # 🏥 Hospital Patient Record System
 
-A web-based application built using **Spring Boot, Thymeleaf, and MySQL** to manage patients, doctors, and prescriptions efficiently.
+A web-based application developed using **Spring Boot, Thymeleaf, and MySQL** to manage patients, doctors, prescriptions, and medical history efficiently.
 
 ---
 
-## 🚀 Features
+## 📌 Features
 
 ### 👤 Patient Management
 
@@ -13,29 +13,29 @@ A web-based application built using **Spring Boot, Thymeleaf, and MySQL** to man
 * ✏️ Edit Patient Details
 * 🗑️ Delete Patient
 
----
-
 ### 👨‍⚕️ Doctor Management
 
 * ➕ Register Doctor
 * 📋 View All Doctors
-
----
 
 ### 💊 Prescription Management
 
 * ➕ Add Prescription
 * 🔗 Link Prescription to Patient
 
----
-
 ### 📜 Patient History
 
+* 📄 View Patient History
 * 🔍 Search Patient by ID
-* 📊 View Complete Patient Details
+* 📊 View Patient Details
 * 📁 View All Past Prescriptions
 
+### 🎨 User Interface
 
+* 🌄 Modern UI with background image
+* 🧊 Glassmorphism design
+* 🎯 Clean and user-friendly layout
+* ⚡ Smooth navigation between modules
 
 ---
 
@@ -49,19 +49,83 @@ A web-based application built using **Spring Boot, Thymeleaf, and MySQL** to man
 
 ---
 
+## 🗂️ Project Structure
+
+```
+Hospital_patient_record_system
+│
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com
+│   │   │       └── hospital
+│   │   │
+│   │   │           ├── controller
+│   │   │           │   ├── PatientController.java
+│   │   │           │   ├── PrescriptionController.java
+│   │   │           │   └── DoctorController.java
+│   │   │
+│   │   │           ├── entity
+│   │   │           │   ├── Patient.java
+│   │   │           │   ├── Prescription.java
+│   │   │           │   └── Doctor.java
+│   │   │
+│   │   │           ├── repository
+│   │   │           │   ├── PatientRepository.java
+│   │   │           │   ├── PrescriptionRepository.java
+│   │   │           │   └── DoctorRepository.java
+│   │   │
+│   │   │           ├── service
+│   │   │           │   ├── PatientService.java
+│   │   │           │   ├── PatientServiceImple.java
+│   │   │           │   ├── PrescriptionService.java
+│   │   │           │   ├── PrescriptionServiceImple.java
+│   │   │           │   ├── DoctorService.java
+│   │   │           │   └── DoctorServiceImple.java
+│   │   │
+│   │   │           └── HospitalPatientRecordSystemApplication.java
+│   │
+│   │   ├── resources
+│   │   │   ├── templates
+│   │   │   │   ├── index.html
+│   │   │   │   ├── register.html
+│   │   │   │   ├── patients.html
+│   │   │   │   ├── prescription.html
+│   │   │   │   ├── history.html
+│   │   │   │   ├── doctorRegister.html
+│   │   │   │   └── doctors.html
+│   │   │   │
+│   │   │   ├── static
+│   │   │   │   ├── css/
+│   │   │   │   └── images/
+│   │   │   │
+│   │   │   └── application.properties
+│   │
+│   └── test
+│       └── java
+│
+├── target/
+├── .mvn/
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+└── README.md
+```
+
+---
+
 ## ⚙️ Setup Instructions
 
-### 1️⃣ Clone Repository
+### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/Hospital-Patient-Record-System.git
+git clone https://github.com/parimalahire2304-py/Hospital-Patient-Record-System.git
+cd Hospital-Patient-Record-System
 ```
 
 ---
 
 ### 2️⃣ Configure Database
-
-Update `application.properties`:
 
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/hospital_db
@@ -74,7 +138,7 @@ spring.jpa.show-sql=true
 
 ---
 
-### 3️⃣ Run Application
+### 3️⃣ Run the Application
 
 ```bash
 mvn spring-boot:run
@@ -82,7 +146,7 @@ mvn spring-boot:run
 
 ---
 
-### 4️⃣ Open in Browser
+### 4️⃣ Access Application
 
 ```
 http://localhost:8080/
@@ -92,12 +156,23 @@ http://localhost:8080/
 
 ## 🔮 Future Enhancements
 
-* 🔐 Login & Authentication
-* 👨‍⚕️ Role-based access (Admin/Doctor)
-* 📊 Dashboard analytics
-* 🔍 Search by name instead of ID
-* 📱 Mobile responsive UI
+* 🔐 User Authentication (Login System)
+* 📊 Dashboard Analytics
+* 🔎 Search by Name instead of ID
+* 📱 Mobile Responsive UI
 
 ---
 
+## 👨‍💻 Authors
 
+* **Parimal Ahire**
+  GitHub: https://github.com/parimalahire2304-py
+
+* **Lalit Dhone**
+  GitHub: https://github.com/lalitdhone-11
+
+---
+
+## 📄 License
+
+This project is developed for educational purposes.
