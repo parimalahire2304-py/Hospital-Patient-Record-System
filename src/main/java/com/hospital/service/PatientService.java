@@ -14,4 +14,6 @@ public interface PatientService {
 Patient getPatientById(Integer id);
 
 void deletePatient(Integer id);
+
+public boolean updatePatient(Patient patient);
 }

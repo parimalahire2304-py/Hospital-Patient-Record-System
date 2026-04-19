@@ -24,7 +24,7 @@ public class PrescriptionServiceImple implements PrescriptionService{
 		return false;
 	}
 	public List<Prescription> getPrescriptionByPatientId(Integer patientId) {
-	    return presRepo.findByPatientId(patientId);
+		 return presRepo.findByPatient_Id(patientId);
 	}
 
 }

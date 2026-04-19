@@ -38,6 +38,16 @@ public class PatientServiceImple implements PatientService {
 		// TODO Auto-generated method stub
 		 patientRepo.deleteById(id);
 	}
+	@Override
+	public boolean updatePatient(Patient patient) {
+		try {
+	        patientRepo.save(patient);   
+	        return true;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
 	
 
 }

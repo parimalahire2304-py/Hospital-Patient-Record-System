@@ -3,25 +3,23 @@ package com.hospital.entity;
 import jakarta.persistence.*;
 
 @Entity
-public class Patient {
+public class Doctor {
 
     @Id
+    @Column
+    
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;   
-
+    private Integer id;
     @Column
     private String name;
-
     @Column
-    private Integer age;
-
+    private String specialization;
     @Column
-    private String gender;
-
+    private int experience;
     @Column
     private String phoneNo;
 
-    
+    // Getters & Setters
 
     public Integer getId() {
         return id;
@@ -39,20 +37,20 @@ public class Patient {
         this.name = name;
     }
 
-    public Integer getAge() {
-        return age;
+    public String getSpecialization() {
+        return specialization;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
     }
 
-    public String getGender() {
-        return gender;
+    public int getExperience() {
+        return experience;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setExperience(int experience) {
+        this.experience = experience;
     }
 
     public String getPhoneNo() {
@@ -62,5 +60,4 @@ public class Patient {
     public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo;
     }
-    
 }

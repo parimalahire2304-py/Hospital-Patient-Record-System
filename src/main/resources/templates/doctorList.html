@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Patients</title>
+<title>Doctor List</title>
 
 <style>
     body {
@@ -50,7 +50,7 @@
     .add-btn {
         padding: 10px 15px;
         text-decoration: none;
-        background: linear-gradient(45deg, #28a745, #218838);
+        background: linear-gradient(45deg, #007bff, #0056b3);
         color: white;
         border-radius: 8px;
         transition: 0.3s;
@@ -94,11 +94,6 @@
         transform: scale(1.1);
     }
 
-    .history-btn {
-        background: #17a2b8;
-        color: white;
-    }
-
     .edit-btn {
         background: #ffc107;
         color: black;
@@ -109,7 +104,14 @@
         color: white;
     }
 
-    /* ✅ BACK BUTTON */
+    .badge {
+        padding: 5px 10px;
+        border-radius: 10px;
+        background: #17a2b8;
+        color: white;
+    }
+
+    /* ✅ Improved Back Button */
     .back-btn {
         position: absolute;
         top: 20px;
@@ -136,64 +138,66 @@
 
 <div class="overlay"></div>
 
-<!-- ✅ BACK BUTTON -->
-<a th:href="@{/}" class="back-btn">⬅ Back</a>
+<!-- ✅ BACK BUTTON (FIXED) -->
+<a th:href="@{/}" class="back-btn">⬅ Home</a>
 
 <div class="container">
 
-    <div class="header">🏥 Hospital Patient Record System</div>
+    <div class="header">👨‍⚕️ Doctor Management System</div>
 
     <div class="top-bar">
         <div>
-            <h2>Patient Management</h2>
-            <p style="color:#ccc;">Manage all registered patients</p>
+            <h2>Doctor Management</h2>
+            <p style="color:#ccc;">All hospital doctors and specialists</p>
         </div>
 
-        <a th:href="@{/regPage}" class="add-btn">➕ Add Patient</a>
+        <!-- ✅ Add Doctor -->
+        <a th:href="@{/doctor}" class="add-btn">➕ Add Doctor</a>
     </div>
 
     <table>
 
         <tr>
-            <th>ID</th>
             <th>Name</th>
-            <th>Age</th>
-            <th>Gender</th>
+            <th>Specialization</th>
+            <th>Experience</th>
             <th>Phone</th>
             <th>Actions</th>
         </tr>
 
-        <tr th:each="p : ${patients}">
-            <td th:text="${p.id}"></td>
-            <td th:text="${p.name}"></td>
-            <td th:text="${p.age}"></td>
-            <td th:text="${p.gender}"></td>
-            <td th:text="${p.phoneNo}"></td>
+        <tr th:each="d : ${doctors}">
+
+            <td th:text="${d.name}"></td>
+
+            <td>
+                <span class="badge" th:text="${d.specialization}"></span>
+            </td>
+
+            <td th:text="${d.experience + ' yrs'}"></td>
+
+            <td th:text="${d.phoneNo}"></td>
 
             <td>
 
-                <!-- History -->
-                <a th:href="@{/history(id=${p.id})}">
-                    <button class="history-btn">⏱</button>
-                </a>
-
-                <!-- Edit -->
-                <a th:href="@{/edit/{id}(id=${p.id})}">
+                <!-- ✏ Edit -->
+                <a th:href="@{/editDoctor/{id}(id=${d.id})}">
                     <button class="edit-btn">✏</button>
                 </a>
 
-                <!-- Delete -->
-                <form th:action="@{/delete/{id}(id=${p.id})}" method="post"
+                <!-- 🗑 Delete (POST FIX) -->
+                <form th:action="@{/deleteDoctor/{id}(id=${d.id})}" method="post"
                       style="display:inline;">
                     <button class="delete-btn"
-                            onclick="return confirm('Delete this patient?')">🗑</button>
+                            onclick="return confirm('Delete this doctor?')">🗑</button>
                 </form>
 
             </td>
+
         </tr>
 
-        <tr th:if="${#lists.isEmpty(patients)}">
-            <td colspan="6" style="padding:20px;">No patients found</td>
+        <!-- Empty -->
+        <tr th:if="${#lists.isEmpty(doctors)}">
+            <td colspan="5" style="padding:20px;">No doctors found</td>
         </tr>
 
     </table>

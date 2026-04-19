@@ -31,8 +31,9 @@ public class Prescription {
 	private String medicine;
 	@Column
 	private String note;
-	@Column
-	private String prescribedBy;
+	@ManyToOne
+	@JoinColumn(name = "doctor_id")
+	private Doctor doctor;
 	
 	public Patient getPatient() {
 		return patient;
@@ -71,11 +72,13 @@ public class Prescription {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	public String getPrescribedBy() {
-		return prescribedBy;
+	 
+	public Doctor getDoctor() {
+	    return doctor;
 	}
-	public void setPrescribedBy(String prescriptedBy) {
-		this.prescribedBy = prescriptedBy;
+
+	public void setDoctor(Doctor doctor) {
+	    this.doctor = doctor;
 	}
 	public int getId() {
 		return id;

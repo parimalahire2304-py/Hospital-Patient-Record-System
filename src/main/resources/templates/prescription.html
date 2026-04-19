@@ -8,16 +8,12 @@
             margin: 0;
             font-family: 'Segoe UI', Arial;
             height: 100vh;
-
-            /* 🌄 Same background */
             background: url('https://images.unsplash.com/photo-1586773860418-d37222d8fce3') no-repeat center center/cover;
-
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* 🌫 Overlay */
         .overlay {
             background: rgba(0, 0, 0, 0.6);
             position: absolute;
@@ -27,7 +23,6 @@
             left: 0;
         }
 
-        /* 📦 Container */
         .container {
             position: relative;
             z-index: 1;
@@ -44,8 +39,7 @@
             margin-bottom: 20px;
         }
 
-        /* Inputs */
-        input, textarea {
+        input, textarea, select {
             width: 100%;
             padding: 10px;
             margin: 8px 0;
@@ -57,7 +51,6 @@
             resize: none;
         }
 
-        /* Button */
         button {
             width: 100%;
             padding: 10px;
@@ -74,7 +67,6 @@
             transform: scale(1.05);
         }
 
-        /* Messages */
         .msg {
             text-align: center;
             margin-bottom: 10px;
@@ -88,7 +80,6 @@
             color: red;
         }
 
-        /* Back link */
         a {
             display: block;
             text-align: center;
@@ -100,7 +91,6 @@
         a:hover {
             text-decoration: underline;
         }
-
     </style>
 </head>
 
@@ -112,17 +102,16 @@
 
     <h2>💊 Add Prescription</h2>
 
-    <!-- Success Message -->
+    <!-- Messages -->
     <p th:if="${Success}" th:text="${Success}" class="msg success"></p>
-
-    <!-- Error Message -->
     <p th:if="${errorMsg}" th:text="${errorMsg}" class="msg error"></p>
 
+    <!-- FORM -->
     <form th:action="@{/PrescriptionForm}" th:object="${prescription}" method="post">
 
-        <!-- Patient ID -->
+        <!-- ✅ Patient -->
         <label>Patient ID</label>
-        <input type="number" name="patientId" placeholder="Enter Patient ID" required>
+        <input type="number" th:field="*{patient.id}" placeholder="Enter Patient ID" required>
 
         <!-- Date -->
         <label>Date</label>
@@ -144,9 +133,15 @@
         <label>Notes</label>
         <textarea th:field="*{note}"></textarea>
 
-        <!-- Doctor -->
+        <!-- ✅ Doctor Dropdown -->
         <label>Prescribed By</label>
-        <input type="text" th:field="*{prescribedBy}" required>
+        <select th:field="*{doctor.id}" required>
+            <option value="" disabled selected>-- Select Doctor --</option>
+            <option th:each="doc : ${doctors}"
+                    th:value="${doc.id}"
+                    th:text="${doc.name}">
+            </option>
+        </select>
 
         <button type="submit">Save Prescription</button>
 

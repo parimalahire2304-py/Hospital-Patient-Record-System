@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Add Doctor</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Arial;
+        height: 100vh;
+
+        background: url('https://images.unsplash.com/photo-1586773860418-d37222d8fce3') no-repeat center center/cover;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .overlay {
+        background: rgba(0, 0, 0, 0.6);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .form-container {
+        position: relative;
+        z-index: 1;
+        width: 400px;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 30px;
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        color: white;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .back-link {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: none;
+    }
+
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .btn-primary {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background: linear-gradient(45deg, #007bff, #0056b3);
+        color: white;
+        cursor: pointer;
+        width: 48%;
+    }
+
+    .btn-secondary {
+        padding: 10px;
+        border-radius: 5px;
+        background: gray;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        width: 48%;
+        display: inline-block;
+    }
+
+    .success {
+        color: lightgreen;
+        text-align: center;
+    }
+
+    .error {
+        color: red;
+        text-align: center;
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<a href="/doctorList" class="back-link">⬅ Back</a>
+
+<div class="form-container">
+
+    <h2>🩺 Add Doctor</h2>
+
+    <!-- SUCCESS -->
+    <div th:if="${successMsg}" class="success">
+        <p th:text="${successMsg}"></p>
+    </div>
+
+    <!-- ERROR -->
+    <div th:if="${errorMsg}" class="error">
+        <p th:text="${errorMsg}"></p>
+    </div>
+
+    <form th:action="@{/doctorForm}" th:object="${doctor}" method="post">
+
+        <!-- NAME -->
+        <label>Name</label>
+        <input type="text" th:field="*{name}" placeholder="Doctor name" required>
+
+        <!-- SPECIALIZATION -->
+        <label>Specialization</label>
+        <input type="text" th:field="*{specialization}" placeholder="e.g. Cardiologist" required>
+
+        <!-- EXPERIENCE -->
+        <label>Experience (Years)</label>
+        <input type="number" th:field="*{experience}" min="0" max="50" required>
+
+        <!-- PHONE -->
+        <label>Phone</label>
+        <input type="tel" th:field="*{phoneNo}" pattern="[6-9][0-9]{9}" placeholder="10-digit mobile" required>
+
+        <!-- BUTTONS -->
+        <div class="button-group">
+            <button type="submit" class="btn-primary">Register</button>
+            <a href="/doctorList" class="btn-secondary">Cancel</a>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>

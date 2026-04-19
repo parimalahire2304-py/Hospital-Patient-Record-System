@@ -154,7 +154,7 @@
                 <td th:text="${p.symptoms}"></td>
                 <td th:text="${p.diagnosis}"></td>
                 <td th:text="${p.medicine}"></td>
-                <td th:text="${p.prescribedBy}"></td>
+              <td th:text="${p.doctor.name}"></td> 
             </tr>
 
             <tr th:if="${#lists.isEmpty(prescriptions)}">

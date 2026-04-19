@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import com.hospital.entity.Doctor;
 import com.hospital.entity.Patient;
 import com.hospital.entity.Prescription;
 import com.hospital.service.PatientService;
@@ -51,13 +52,22 @@ public class PatientController {
     public String editPatient(@PathVariable Integer id, Model model) {
 
         Patient patient = patientServ.getPatientById(id);
-
-        if (patient == null) {
-            return "redirect:/patients";
-        }
-
         model.addAttribute("patient", patient);
+
         return "updatePatient";
+        
+    }
+    @PostMapping("/updatePatient")
+    public String updatePatient(@ModelAttribute("patient") Patient patient, Model model) {
+
+        boolean status = patientServ.updatePatient(patient);
+
+        if (status) {
+            return "redirect:/patients";   // ✅ redirect to listing
+        } else {
+            model.addAttribute("errorMsg", "Failed to update patient");
+            return "updatePatient";
+        }
     }
 
     @GetMapping("/delete/{id}")
@@ -74,19 +84,14 @@ public class PatientController {
 
         Patient patient = patientServ.getPatientById(id);
 
-        if (patient == null) {
-            return "redirect:/patients";
-        }
-
         List<Prescription> prescriptions =
-        	    prescriptionService.getPrescriptionByPatientId(id);
+            prescriptionService.getPrescriptionByPatientId(id);
 
         model.addAttribute("patient", patient);
         model.addAttribute("prescriptions", prescriptions);
-
+        model.addAttribute("doctor", new Doctor()); 
         return "history";
     }
-    
     @GetMapping("/history")
     public String patientHistoryByParam(@RequestParam(required = false) Integer id, Model model) {
 

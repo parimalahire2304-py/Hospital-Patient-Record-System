@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.hospital.entity.Prescription;
 
 public interface PrescriptionRepository extends JpaRepository<Prescription, Integer> {
-	List<Prescription> findByPatientId(Integer patientId);
+	List<Prescription> findByPatient_Id(Integer patientId);
 
 }
