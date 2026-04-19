@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Patient History</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial;
+            height: 100vh;
+
+            /* 🌄 Same background as index */
+            background: url('https://images.unsplash.com/photo-1586773860418-d37222d8fce3') no-repeat center center/cover;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 🌫 Overlay */
+        .overlay {
+            background: rgba(0, 0, 0, 0.6);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        /* 📦 Glass container */
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 900px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            color: white;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        /* 🔙 Back button */
+        .back {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        /* 🔍 Search box */
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 10px;
+            width: 200px;
+            border-radius: 5px;
+            border: none;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background: linear-gradient(45deg, #28a745, #218838);
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: linear-gradient(45deg, #218838, #1e7e34);
+            transform: scale(1.05);
+        }
+
+        /* 📊 Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid rgba(255,255,255,0.3);
+            text-align: center;
+        }
+
+        th {
+            background: rgba(0,0,0,0.4);
+        }
+
+        tr:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="container">
+
+    <a href="/patients" class="back">⬅ Back</a>
+
+    <!-- 🔍 Search -->
+    <form action="/history" method="get">
+        <input type="number" name="id" placeholder="Enter Patient ID" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- ✅ Show data only if exists -->
+    <div th:if="${patient != null}">
+
+        <h2>👤 Patient Details</h2>
+
+        <p><b>Name:</b> <span th:text="${patient.name}"></span></p>
+        <p><b>Age:</b> <span th:text="${patient.age}"></span></p>
+        <p><b>Gender:</b> <span th:text="${patient.gender}"></span></p>
+        <p><b>Phone:</b> <span th:text="${patient.phoneNo}"></span></p>
+
+        <h2>💊 Prescription History</h2>
+
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Symptoms</th>
+                <th>Diagnosis</th>
+                <th>Medicine</th>
+                <th>Doctor</th>
+            </tr>
+
+            <tr th:each="p : ${prescriptions}">
+                <td th:text="${p.date}"></td>
+                <td th:text="${p.symptoms}"></td>
+                <td th:text="${p.diagnosis}"></td>
+                <td th:text="${p.medicine}"></td>
+              <td th:text="${p.doctor.name}"></td> 
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(prescriptions)}">
+                <td colspan="5">No prescriptions found</td>
+            </tr>
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>
